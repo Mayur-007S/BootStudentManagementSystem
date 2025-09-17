@@ -35,6 +35,7 @@ public class StudentServiceImpl implements StudentService {
 		this.validator = validator;
 	}
 
+	@Cacheable(value = "student", key = "#sid")
 	@Override
 	public List<Students> getAllStudents() {
 		return repository.findAll();
@@ -52,7 +53,7 @@ public class StudentServiceImpl implements StudentService {
 		return "Student Added with Id : " + repository.save(stud).getSid();
 	}
 
-	@CachePut(value = "student", key = "#sid")
+//	@CachePut(value = "student", key = "#sid")
 	@Override
 	public Optional<Students> updateStudent(Students stud, int studentId) {
 		stud.setSid(studentId);
@@ -65,7 +66,7 @@ public class StudentServiceImpl implements StudentService {
 		repository.deleteById(studentId);
 	}
 
-	@Cacheable(value = "student", key = "#sid")
+	
 	@Override
 	public Optional<Students> getOne(int sid) {
 		return repository.findById(sid);

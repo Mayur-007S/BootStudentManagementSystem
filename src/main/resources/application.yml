@@ -18,14 +18,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-  cache:
-    type: redis
-    cache-names: student
-  data:
-    redis:
-      host: localhost
-      port: 6379	
-
+#  cache:
+#    type: redis
+#    cache-names: student
+#  data:
+#    redis:
+#      host: localhost
+     
 
 
 

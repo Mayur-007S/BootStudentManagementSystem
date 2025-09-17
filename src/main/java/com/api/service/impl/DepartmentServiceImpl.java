@@ -14,7 +14,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Autowired
 	private DepartmentRepository repository;
-
+	
+	@Autowired
 	private ObjectsValidator<Department> validator;
 
 	@Override
@@ -25,7 +26,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public String addDepartment(Department dept) {
-//		validator.validate(dept);
+		validator.validate(dept);
 		return "Department Added with Id : " + repository.save(dept).getDeptid();
 	}
 

@@ -29,8 +29,8 @@ public class Students implements Serializable {
 	@NotEmpty(message = "The marks should not be empty")
 	private String marks;
 
-	@NotNull(message = "The marks should not be empty")
-	@NotEmpty(message = "The marks should not be empty")
+	@NotNull(message = "The role should not be empty")
+	@NotEmpty(message = "The role should not be empty")
 	private String role;
 
 	@ManyToOne // Many students can belong to one department

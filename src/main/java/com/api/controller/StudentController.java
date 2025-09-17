@@ -96,7 +96,7 @@ public class StudentController {
 
 	@PostMapping("/student")
 	public String addStudet(@RequestBody Students stud) {
-		return service.addStudent(stud) + " " + HttpStatus.CREATED;
+		return service.addStudent(stud);
 	}
 
 	@PutMapping("/student/{sid}")
