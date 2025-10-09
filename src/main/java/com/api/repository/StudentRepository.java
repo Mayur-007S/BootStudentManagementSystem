@@ -12,7 +12,8 @@ public interface StudentRepository extends JpaRepository<Students, Integer> {
 	@Query("select s from Students s where s.name=:n and s.marks=:m")
 	public Students getAll(@Param("n") String n, @Param("m") int m);
 
-	@Query(value = "SELECT * FROM students WHERE LOWER(name) LIKE LOWER(CONCAT('%', :n, '%'))", nativeQuery = true)
+	@Query(value = "SELECT * FROM students WHERE LOWER(name) LIKE LOWER(CONCAT( :n,'%'))", 
+			nativeQuery = true)
 	List<Students> getByName(@Param("n") String n);
 
 }

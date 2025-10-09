@@ -81,6 +81,10 @@ public class Students implements Serializable {
 	public int getdeptid() {
 		return dept.getDeptid();
 	}
+	
+	public Department getdept() {
+		return dept;
+	}
 
 	public String getRole() {
 		return role;

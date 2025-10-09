@@ -16,8 +16,6 @@ public interface StudentService {
 
 	public Optional<Students> getOne(int sid);
 	
-	public String throwException();
-	
 	public Students getByNameAndMarks(String name, int marks);
 	
 	public List<Students> getByName(String name);

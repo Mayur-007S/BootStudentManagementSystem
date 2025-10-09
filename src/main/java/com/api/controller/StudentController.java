@@ -1,6 +1,8 @@
 package com.api.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.api.exceptions.DepartmentNotFoundException;
 import com.api.exceptions.StudentNotFoundException;
@@ -36,7 +39,6 @@ public class StudentController {
 	@Autowired
 	private StudentService service;
 
-	
 	@GetMapping("/student")
 	public List<Students> getAll() throws StudentNotFoundException {
 		List<Students> listofstudents = service.getAllStudents();
@@ -46,15 +48,13 @@ public class StudentController {
 			throw new StudentNotFoundException("No Student Found in Database");
 		}
 	}
-	
+
 	@GetMapping("/studentFilter")
 	public List<Students> getByRole() throws StudentNotFoundException {
 		List<Students> listofstudents = service.getAllStudents();
-		listofstudents = listofstudents
-				.stream()
-				.filter(s -> s.getdeptid() == 100 && Integer.parseInt(s.getMarks()) >= 90)
-//				.sorted((i,j) -> Integer.compare(i.getMarks(), j.getMarks()))
+		listofstudents = listofstudents.stream().filter(s -> s.getRole().equalsIgnoreCase("FullStack"))
 				.collect(Collectors.toList());
+
 		if (!listofstudents.isEmpty()) {
 			return listofstudents;
 		} else {
@@ -71,28 +71,6 @@ public class StudentController {
 			throw new StudentNotFoundException("Student with Sid = " + sid + " Not Found in Database");
 		}
 	}
-
-//	@PostMapping("/student")
-//	public String addStudet(
-//			@RequestBody @Valid Students stud, 
-//			BindingResult bindingResult
-//			) {
-//		
-//		Optional<Department> dept = 
-//				Optional.ofNullable(deptservice.getOne(stud.getDeptId())
-//		.orElseThrow(() -> 
-//		new DepartmentNotFoundException("Department with Deptid = " + stud.getDeptId() + " Not Found in Database")));
-//		
-//		if (bindingResult.hasErrors()) {
-//			return bindingResult.getAllErrors()
-//					.stream()
-//					.map(ObjectError::getDefaultMessage)
-//					.collect(Collectors.joining());
-//		}
-//		stud.setDept(dept.get());
-//		String student = service.addStudent(stud);
-//		return student.toString();
-//	}
 
 	@PostMapping("/student")
 	public String addStudet(@RequestBody Students stud) {
@@ -124,14 +102,8 @@ public class StudentController {
 		return "Error: Student with Sid = " + sid + " has Not Found!";
 	}
 
-	@GetMapping("/error")
-	public String throwException() {
-		return service.throwException();
-	}
-
 	@GetMapping("/studDept")
-	public Students getAllStudWithDept(
-			@RequestParam(value = "name", required = true) String name,
+	public Students getAllStudWithDept(@RequestParam(value = "name", required = true) String name,
 			@RequestParam(value = "marks", required = true) int marks) {
 		System.out.println("Name: " + name + " Marks: " + marks);
 		Students listofstudent = service.getByNameAndMarks(name, marks);

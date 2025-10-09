@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.api.exceptions.DepartmentNotFoundException;
 import com.api.model.Department;
 import com.api.repository.DepartmentRepository;
 import com.api.service.DepartmentService;
@@ -47,8 +49,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 		// TODO Auto-generated method stub
 		return Optional.ofNullable(repository.findById(deptid)
 				.orElseThrow(() -> 
-				new IllegalStateException("Department with id " 
-				+ deptid + " does not exists")));
+				new DepartmentNotFoundException("Department with id "+ deptid + " does not exists")));
 	}
 
 }
