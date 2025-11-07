@@ -2,10 +2,12 @@ package com.api.service.impl;
 
 import java.time.LocalDateTime;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 @Service
+@Profile(value =  "prod" )
 public class TaskServiceImpl {
 //	@Scheduled(fixedRate = 5000)
 	public void cleanTempFile() {

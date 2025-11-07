@@ -41,7 +41,7 @@ public class StudentServiceImpl implements StudentService {
 		this.validator = validator;
 	}
 	
-	@Scheduled(cron = "0 0 10 0 0 0") 
+//	@Scheduled(cron = "0 0 * * 0 0") 
 	@Cacheable(value = "student", key = "#sid")
 	public void updateData() {
 		logger.info("Inside updateData Method");

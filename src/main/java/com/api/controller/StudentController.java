@@ -1,14 +1,20 @@
 package com.api.controller;
 
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -18,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,28 +32,37 @@ import org.springframework.web.client.RestTemplate;
 
 import com.api.exceptions.DepartmentNotFoundException;
 import com.api.exceptions.StudentNotFoundException;
+import com.api.model.APILogs;
 import com.api.model.Department;
 import com.api.model.Students;
 import com.api.service.DepartmentService;
 import com.api.service.StudentService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
 public class StudentController {
 
+	private Logger log = LoggerFactory.getLogger(StudentController.class);
+
 	@Autowired
 	private StudentService service;
 
 	@GetMapping("/student")
 	public List<Students> getAll() throws StudentNotFoundException {
-		List<Students> listofstudents = service.getAllStudents();
-		if (!listofstudents.isEmpty()) {
-			return listofstudents;
-		} else {
+		log.info("Conversation-Id: {}", MDC.get("correlationId"));
+		log.info("Transaction-Id: {}", MDC.get("transactionId"));
+		
+			List<Students> listofstudents = service.getAllStudents();
+			if (!listofstudents.isEmpty()) {
+				return listofstudents;
+			}
+			
 			throw new StudentNotFoundException("No Student Found in Database");
-		}
+			
 	}
 
 	@GetMapping("/studentFilter")

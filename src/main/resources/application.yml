@@ -1,27 +1,6 @@
 server:
-  port: 8085
+  port: 8085 
 
 spring:
-  application:
-    name: BootStudentManagementSystem
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/studentsDB
-    username: root
-    password: yPB}X`8iWX/w
-
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-#  cache:
-#    type: redis
-#    cache-names: student
-#  data:
-#    redis:
-#      host: localhost
-#      port: 6379
+  profiles:
+    active: dev
