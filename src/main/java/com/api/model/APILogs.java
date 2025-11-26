@@ -4,10 +4,12 @@ import java.time.LocalTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.security.auth.message.callback.PrivateKeyCallback.Request;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,13 +21,16 @@ public class APILogs {
 	private long seq_no;
 	private String transactionId;
 	private String conversationId;
-	private String timestamp; 
+	private String timestamp;
 	private String contract;
 	private String notification;
+
+	@Column(length = 255)
 	private String request;
+
+	@Column(length = 255)
 	private String response;
 
-	
 	public APILogs() {
 		LocalTime now = LocalTime.now();
 		this.timestamp = now.toString();
@@ -90,6 +95,5 @@ public class APILogs {
 	public void setResponse(String response) {
 		this.response = response;
 	}
-	
-	
+
 }
